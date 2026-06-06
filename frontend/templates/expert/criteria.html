@@ -1,262 +1,245 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Criteria Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
-{% block content %}
-<style>
-    .criteria-section { background: #f8f9fa; border-radius: 10px; padding: 20px; margin-bottom: 30px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
-    .criteria-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; border-radius: 8px; overflow: hidden; }
-    .criteria-table th { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; text-align: center; font-weight: 600; }
-    .criteria-table td { padding: 15px; text-align: center; border-bottom: 1px solid #dee2e6; }
-    .criteria-table tr:hover { background: #f8f9fa; }
-    .weight-input { width: 60px; padding: 8px; border: 1px solid #ddd; border-radius: 5px; text-align: center; font-weight: 600; }
-    .btn-sm { padding: 5px 15px; font-size: 0.9em; margin: 0 2px; cursor: pointer; border: none; border-radius: 4px; color: white; }
-    .btn-delete { background: #dc3545; }
-    .btn-delete:hover { background: #c82333; }
-    .btn-save { background: #28a745; padding: 12px 25px; font-size: 16px; border: none; border-radius: 5px; color: white; cursor: pointer; display: inline-block;}
-    .btn-save:hover { background: #218838; }
-    .btn-backup { background: #17a2b8; padding: 10px 20px; border: none; border-radius: 5px; color: white; cursor: pointer; }
-    .btn-restore { background: #6c757d; padding: 10px 20px; border: none; border-radius: 5px; color: white; cursor: pointer; }
-    .btn-reset { background: #dc3545; padding: 10px 20px; border: none; border-radius: 5px; color: white; cursor: pointer; }
-    .form-section { background: #e8f4fd; border-radius: 10px; padding: 25px; margin-top: 30px; border-left: 5px solid #2196F3; display: none; }
-    .specialization-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
-    .spec-badge { padding: 5px 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 20px; font-size: 0.9em; font-weight: 500; display: flex; align-items: center; gap: 10px; }
-    .spec-badge input { color: black; width: 50px; border: none; border-radius: 3px; padding: 2px; text-align: center; }
-    .message-alert { padding: 15px; margin-bottom: 20px; border-radius: 5px; display: none; text-align: center; background-color: #d4edda; color: #155724;}
-</style>
+        body { 
+            background-color: #10002b; 
+            font-family: 'Inter', sans-serif; 
+            padding: 20px; 
+            margin: 0;
+        }
 
-<div class="card">
-    <div class="card-header" style="text-align: center;">
-        <h1><i class="fas fa-cogs"></i> Criteria Management</h1>
-        <p>Manage subjects, skills, and their weights. <strong>Click "Save Changes" to apply.</strong></p>
-        <a href="{{ url_for('expert_dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
-    </div>
+        .container { 
+            max-width: 1100px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-sizing: border-box;
+        }
 
-    <div id="messageArea"></div>
+        /* FIX 1: Responsive Wrapper to prevent horizontal overflow */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
 
-    <div style="text-align: center; margin: 30px 0; padding: 20px; background: #eee; border-radius: 10px;">
-        <form id="saveForm" method="POST" style="display:inline;">
-            <!-- CORRECT KEY FOR PYTHON -->
-            <input type="hidden" name="criteria_json" id="hiddenJSON">
-            <button type="button" class="btn-save" onclick="saveToServer()">
-                <i class="fas fa-save"></i> Save Changes
-            </button>
-        </form>
-        <button class="btn-backup" onclick="backupAllCriteria()">
-            <i class="fas fa-download"></i> Backup
-        </button>
-        <button class="btn-restore" onclick="restoreFromFile()">
-            <i class="fas fa-upload"></i> Restore
-        </button>
-        <button class="btn-reset" onclick="resetToDefault()">
-            <i class="fas fa-undo"></i> Reset Defaults
-        </button>
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            table-layout: auto; /* Allows dynamic column resizing */
+        }
+
+        th { 
+            background: #264653; 
+            color: white; 
+            padding: 15px 10px; 
+            font-size: 0.85em;
+            text-transform: uppercase;
+            white-space: nowrap; /* Keeps headers on one line */
+        }
+
+        td { 
+            padding: 12px 10px; 
+            border-bottom: 1px solid #eee; 
+            text-align: center; 
+            vertical-align: middle;
+        }
+
+        /* FIX 2: Style for the Criterion Name (First Column) */
+        .criterion-name {
+            text-align: left !important;
+            font-weight: 700;
+            color: #264653;
+            /* Force wrapping for long words */
+            min-width: 150px;
+            max-width: 250px; 
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal; 
+            line-height: 1.4;
+        }
+
+        .weight-input { 
+            width: 55px; 
+            text-align: center; 
+            padding: 8px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px;
+            font-weight: bold;
+            font-family: monospace;
+        }
+
+        .btn-save { 
+            background: #2a9d8f; 
+            color: white; 
+            border: none; 
+            padding: 12px 25px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-save:hover { background: #21867a; transform: translateY(-2px); }
+
+        .btn-delete {
+            background: #e76f51;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-section { 
+            background: #f8f9fa; 
+            padding: 25px; 
+            border-radius: 12px; 
+            margin-top: 40px; 
+            border: 2px dashed #264653; 
+        }
+
+        .add-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .spec-tag {
+            font-size: 0.7em;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 5px;
+            color: #264653;
+        }
+
+        h3 { color: #264653; border-left: 5px solid #2a9d8f; padding-left: 10px; margin-top: 30px;}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f0f2f5; padding-bottom: 15px; margin-bottom: 20px;">
+        <h1 style="margin:0;"><i class="fas fa-tasks"></i> Criteria Management</h1>
+        <div>
+            <a href="/expert" class="btn" style="background:#6c757d; color:white; text-decoration:none; padding:10px 20px; border-radius:5px; font-weight:bold; margin-right:10px;">Back To Dashboard</a>
+            <button class="btn-save" onclick="saveToServer()"><i class="fas fa-cloud-upload-alt"></i> Save Criteria</button>
+        </div>
     </div>
 
     <div id="criteriaContainer"></div>
 
-    <div class="form-section" id="addForm">
-        <h3><i class="fas fa-plus-circle"></i> Add New Criterion</h3>
-        <div style="margin-bottom: 15px;">
-            <label>Category:</label>
-            <select id="addFormCategory" style="width: 100%; padding: 10px;">
-                <option value="spm_results">SPM Results</option>
-                <option value="previous_semester">Previous Semester</option>
-                <option value="technical_skills">Technical Skills</option>
-            </select>
-        </div>
-        <div style="margin-bottom: 15px;">
-            <label>Criterion Name:</label>
-            <input type="text" id="criterionName" placeholder="e.g., Cloud Computing" style="width: 100%; padding: 10px;">
-            <small>Spaces will be converted to underscores</small>
-        </div>
-        <div style="margin-bottom: 15px;">
-            <label>Weights (1-10):</label>
-            <div class="specialization-badges">
-                <span class="spec-badge">ADE: <input type="number" id="weight_ADE" min="1" max="10" value="5"></span>
-                <span class="spec-badge">AI: <input type="number" id="weight_AI" min="1" max="10" value="5"></span>
-                <span class="spec-badge">SDS: <input type="number" id="weight_SDS" min="1" max="10" value="5"></span>
-                <span class="spec-badge">DE: <input type="number" id="weight_DE" min="1" max="10" value="5"></span>
-                <span class="spec-badge">NDC: <input type="number" id="weight_NDC" min="1" max="10" value="5"></span>
+    <!-- Add New Section -->
+    <div class="form-section">
+        <h2 style="margin-top:0; color:#264653; font-size:1.2em;"><i class="fas fa-plus-circle"></i> Add New Subject/Skill</h2>
+        <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+            <div style="flex: 1;">
+                <label style="font-weight: bold; font-size: 0.8em;">Category</label>
+                <select id="newCat" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ddd;">
+                    <option value="spm_results">SPM Results</option>
+                    <option value="previous_semester">University Results</option>
+                    <option value="technical_skills">Technical Skills</option>
+                </select>
+            </div>
+            <div style="flex: 2;">
+                <label style="font-weight: bold; font-size: 0.8em;">Criterion Name</label>
+                <input type="text" id="newName" placeholder="Enter Full Subject Name" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ddd; box-sizing: border-box;">
             </div>
         </div>
-        <div style="text-align: center; margin-top: 20px;">
-            <button class="btn-save" onclick="addNewCriterion()">Add Criterion</button>
-            <button class="btn btn-secondary" onclick="hideAddForm()">Cancel</button>
+        
+        <label style="font-weight: bold; font-size: 0.8em;">Target Specialization Weights (1-10)</label>
+        <div class="add-grid">
+            <div><span class="spec-tag">Cyber</span><input type="number" id="w_cyber" class="weight-input" value="5" min="1" max="10"></div>
+            <div><span class="spec-tag">Cloud</span><input type="number" id="w_cloud" class="weight-input" value="5" min="1" max="10"></div>
+            <div><span class="spec-tag">IDEX</span><input type="number" id="w_idex" class="weight-input" value="5" min="1" max="10"></div>
+            <div><span class="spec-tag">Data</span><input type="number" id="w_data" class="weight-input" value="5" min="1" max="10"></div>
+            <div><span class="spec-tag">Digital</span><input type="number" id="w_digital" class="weight-input" value="5" min="1" max="10"></div>
         </div>
+        <button class="btn-save" style="width:100%;" onclick="addEntry()">Add to List</button>
     </div>
 </div>
 
+<!-- Hidden form for submission -->
+<form id="saveForm" method="POST" style="display:none;">
+    <input type="hidden" name="criteria_json" id="hiddenJSON">
+</form>
+
 <script>
-    const DEFAULT_CONFIG = {
-        spm_results: {
-            Mathematics: {ADE: 10, AI: 10, SDS: 10, DE: 10, NDC: 10},
-            Additional_Mathematics: {ADE: 5, AI: 10, SDS: 5, DE: 10, NDC: 5},
-            Physics: {ADE: 3, AI: 5, SDS: 10, DE: 5, NDC: 10},
-            Computer_Science: {ADE: 10, AI: 5, SDS: 5, DE: 5, NDC: 5},
-            English: {ADE: 5, AI: 5, SDS: 5, DE: 5, NDC: 5},
-            Chemistry: {ADE: 3, AI: 5, SDS: 3, DE: 3, NDC: 5},
-            Biology: {ADE: 3, AI: 5, SDS: 3, DE: 3, NDC: 3},
-            Economics_Accounting: {ADE: 5, AI: 3, SDS: 3, DE: 5, NDC: 3}
-        },
-        previous_semester: {
-            Programming_Fundamentals: {ADE: 10, AI: 10, SDS: 5, DE: 5, NDC: 3},
-            Data_Structures_Algorithms: {ADE: 5, AI: 10, SDS: 3, DE: 10, NDC: 5},
-            Database_Systems: {ADE: 5, AI: 5, SDS: 3, DE: 10, NDC: 3},
-            Computer_Networking: {ADE: 3, AI: 3, SDS: 10, DE: 3, NDC: 10},
-            Object_Oriented_Programming: {ADE: 10, AI: 5, SDS: 3, DE: 5, NDC: 3},
-            Discrete_Structures: {ADE: 3, AI: 10, SDS: 5, DE: 5, NDC: 3},
-            Software_Engineering: {ADE: 10, AI: 3, SDS: 3, DE: 5, NDC: 3},
-            Operating_Systems: {ADE: 3, AI: 3, SDS: 10, DE: 5, NDC: 10}
-        },
-        technical_skills: {
-            Python_Programming: {ADE: 5, AI: 10, SDS: 5, DE: 10, NDC: 3},
-            SQL_Database: {ADE: 5, AI: 5, SDS: 3, DE: 10, NDC: 3},
-            Git_Version_Control: {ADE: 10, AI: 5, SDS: 5, DE: 5, NDC: 5},
-            JavaScript_Web_Dev: {ADE: 10, AI: 3, SDS: 3, DE: 3, NDC: 3},
-            Linux_Command_Line: {ADE: 3, AI: 5, SDS: 10, DE: 5, NDC: 10},
-            Problem_Solving: {ADE: 10, AI: 10, SDS: 5, DE: 10, NDC: 5},
-            Debugging: {ADE: 10, AI: 5, SDS: 5, DE: 5, NDC: 3},
-            Algorithm_Design: {ADE: 5, AI: 10, SDS: 3, DE: 10, NDC: 3}
-        }
-    };
+    let criteriaConfig = {{ data['criteria'] | tojson }};
+    const SPECS = ['CYBERSECURITY', 'CLOUD COMPUTING', 'IDEX', 'DATA ANALYTICS', 'DIGITAL TRANSFORMATION'];
 
-    const CATEGORY_NAMES = {spm_results: 'SPM Results', previous_semester: 'Previous Semester', technical_skills: 'Technical Skills'};
-    let serverData = {{ data.criteria | default({}) | tojson }};
-    let criteriaConfig = (Object.keys(serverData).length === 0) ? JSON.parse(JSON.stringify(DEFAULT_CONFIG)) : serverData;
-
-    document.addEventListener('DOMContentLoaded', function() { displayAllCriteria(); });
-
-    function displayAllCriteria() {
+    function render() {
         const container = document.getElementById('criteriaContainer');
         container.innerHTML = '';
-        displayCriteriaSection('spm_results', container);
-        displayCriteriaSection('previous_semester', container);
-        displayCriteriaSection('technical_skills', container);
-    }
-
-    function displayCriteriaSection(category, container) {
-        const categoryData = criteriaConfig[category] || {};
-        const categoryName = CATEGORY_NAMES[category] || category;
-        let html = `
-            <div class="criteria-section">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h3>${categoryName}</h3>
-                    <button class="btn-save btn-sm" style="background:#007bff;" onclick="showAddForm('${category}')">
-                        <i class="fas fa-plus"></i> Add New
-                    </button>
-                </div>`;
         
-        if (Object.keys(categoryData).length > 0) {
-            html += `<div style="overflow-x: auto;"><table class="criteria-table">
-                        <thead><tr><th>Criterion</th><th>ADE</th><th>AI</th><th>SDS</th><th>DE</th><th>NDC</th><th>Action</th></tr></thead><tbody>`;
-            for (const [criterion, weights] of Object.entries(categoryData)) {
-                const displayName = criterion.replace(/_/g, ' ');
-                html += `<tr><td><strong>${displayName}</strong></td>
-                        <td><input type="number" class="weight-input" value="${weights.ADE}" onchange="updateWeight('${category}', '${criterion}', 'ADE', this.value)"></td>
-                        <td><input type="number" class="weight-input" value="${weights.AI}" onchange="updateWeight('${category}', '${criterion}', 'AI', this.value)"></td>
-                        <td><input type="number" class="weight-input" value="${weights.SDS}" onchange="updateWeight('${category}', '${criterion}', 'SDS', this.value)"></td>
-                        <td><input type="number" class="weight-input" value="${weights.DE}" onchange="updateWeight('${category}', '${criterion}', 'DE', this.value)"></td>
-                        <td><input type="number" class="weight-input" value="${weights.NDC}" onchange="updateWeight('${category}', '${criterion}', 'NDC', this.value)"></td>
-                        <td><button class="btn-sm btn-delete" onclick="deleteCriterion('${category}', '${criterion}')"><i class="fas fa-trash"></i></button></td></tr>`;
+        for (const [cat, items] of Object.entries(criteriaConfig)) {
+            let catTitle = cat.replace('_', ' ').toUpperCase();
+            let html = `<h3>${catTitle}</h3><div class="table-wrapper"><table><thead><tr>`;
+            html += `<th style="text-align:left; width: 30%;">Criterion Name</th>`;
+            SPECS.forEach(s => html += `<th>${s.split(' ')[0]}</th>`);
+            html += `<th>Del</th></tr></thead><tbody>`;
+            
+            for (const [name, weights] of Object.entries(items)) {
+                let displayName = name.replace(/_/g, ' ');
+                html += `<tr><td class="criterion-name">${displayName}</td>`;
+                SPECS.forEach(s => {
+                    const val = weights[s] || 5;
+                    html += `<td><input type="number" class="weight-input" value="${val}" onchange="updateWeight('${cat}','${name}','${s}',this.value)"></td>`;
+                });
+                html += `<td><button class="btn-delete" onclick="deleteEntry('${cat}','${name}')"><i class="fas fa-trash"></i></button></td></tr>`;
             }
             html += `</tbody></table></div>`;
-        } else { html += `<p style="text-align: center; color: #666; padding: 30px;">No criteria.</p>`; }
-        html += `</div>`;
-        container.innerHTML += html;
-    }
-
-    function updateWeight(category, criterion, spec, value) {
-        let weight = parseInt(value);
-        if (isNaN(weight) || weight < 1 || weight > 10) { alert('Weight must be 1-10'); return; }
-        criteriaConfig[category][criterion][spec] = weight;
-        showMessage('Updated! Click "Save Changes".');
-    }
-
-    function deleteCriterion(category, criterion) {
-        if (confirm(`Delete "${criterion.replace(/_/g, ' ')}"?`)) {
-            delete criteriaConfig[category][criterion];
-            displayAllCriteria();
-            showMessage('Deleted! Click "Save Changes".');
+            container.innerHTML += html;
         }
     }
 
-    function showAddForm(category) {
-        document.getElementById('addFormCategory').value = category;
-        document.getElementById('criterionName').value = '';
-        document.getElementById('addForm').style.display = 'block';
-        document.getElementById('addForm').scrollIntoView({behavior: 'smooth'});
+    function updateWeight(cat, name, spec, val) {
+        criteriaConfig[cat][name][spec] = parseInt(val);
+    }
+    
+    function deleteEntry(cat, name) {
+        if(confirm("Delete this criterion?")) {
+            delete criteriaConfig[cat][name];
+            render();
+        }
     }
 
-    function hideAddForm() { document.getElementById('addForm').style.display = 'none'; }
-
-    function addNewCriterion() {
-        const cat = document.getElementById('addFormCategory').value;
-        const name = document.getElementById('criterionName').value.trim();
-        if (!name) { alert('Enter name'); return; }
-        const cleanName = name.replace(/\s+/g, '_');
-        const weights = {
-            ADE: parseInt(document.getElementById('weight_ADE').value),
-            AI: parseInt(document.getElementById('weight_AI').value),
-            SDS: parseInt(document.getElementById('weight_SDS').value),
-            DE: parseInt(document.getElementById('weight_DE').value),
-            NDC: parseInt(document.getElementById('weight_NDC').value)
+    function addEntry() {
+        const cat = document.getElementById('newCat').value;
+        const name = document.getElementById('newName').value.trim();
+        if(!name) return alert("Please enter a name.");
+        
+        // Clean name for internal keys but preserve original for display in later renders
+        const internalName = name.replace(/\s+/g, '_');
+        
+        criteriaConfig[cat][internalName] = {
+            'CYBERSECURITY': parseInt(document.getElementById('w_cyber').value),
+            'CLOUD COMPUTING': parseInt(document.getElementById('w_cloud').value),
+            'IDEX': parseInt(document.getElementById('w_idex').value),
+            'DATA ANALYTICS': parseInt(document.getElementById('w_data').value),
+            'DIGITAL TRANSFORMATION': parseInt(document.getElementById('w_digital').value)
         };
-        if (!criteriaConfig[cat]) criteriaConfig[cat] = {};
-        criteriaConfig[cat][cleanName] = weights;
-        displayAllCriteria();
-        hideAddForm();
-        showMessage('Added! Click "Save Changes".');
+        document.getElementById('newName').value = '';
+        render();
     }
 
     function saveToServer() {
-        const jsonStr = JSON.stringify(criteriaConfig);
-        document.getElementById('hiddenJSON').value = jsonStr;
+        document.getElementById('hiddenJSON').value = JSON.stringify(criteriaConfig);
         document.getElementById('saveForm').submit();
     }
 
-    function resetToDefault() {
-        if (confirm('Reset to defaults?')) {
-            criteriaConfig = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
-            displayAllCriteria();
-            showMessage('Reset! Click "Save Changes".');
-        }
-    }
-
-    function backupAllCriteria() {
-        const blob = new Blob([JSON.stringify(criteriaConfig, null, 2)], {type: 'application/json'});
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'criteria_backup.json';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
-
-    function restoreFromFile() {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.json';
-        input.onchange = function(e) {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                try {
-                    const loaded = JSON.parse(event.target.result);
-                    if(loaded.spm_results) {
-                        criteriaConfig = loaded;
-                        displayAllCriteria();
-                        showMessage('Restored! Click "Save Changes".');
-                    }
-                } catch(err) { alert("Invalid file"); }
-            };
-            reader.readAsText(file);
-        };
-        input.click();
-    }
-
-    function showMessage(msg) {
-        const area = document.getElementById('messageArea');
-        area.innerHTML = `<div class="message-alert" style="display:block">${msg}</div>`;
-        setTimeout(() => { area.innerHTML = ''; }, 3000);
-    }
+    render();
 </script>
-{% endblock %}
+</body>
+</html>

@@ -1,268 +1,317 @@
 {
     "criteria": {
         "previous_semester": {
-            "Computation_and_Complexity": {
-                "ADE": 5,
-                "AI": 10,
-                "DE": 5,
-                "NDC": 5,
-                "SDS": 5
-            },
-            "Computer_Architecture_&_Assembly": {
-                "ADE": 3,
-                "AI": 3,
-                "DE": 3,
-                "NDC": 10,
-                "SDS": 10
+            "Cloud_Computing": {
+                "CLOUD COMPUTING": 10,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
             },
             "Computer_Networking": {
-                "ADE": 5,
-                "AI": 3,
-                "DE": 3,
-                "NDC": 10,
-                "SDS": 10
+                "CLOUD COMPUTING": 10,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
             },
-            "Cross-Platform_Software_Development": {
-                "ADE": 10,
-                "AI": 10,
-                "DE": 5,
-                "NDC": 3,
-                "SDS": 10
-            },
-            "Data_Structures_and_Algorithms": {
-                "ADE": 10,
-                "AI": 10,
-                "DE": 10,
-                "NDC": 10,
-                "SDS": 5
+            "Cyber_Law_and_Ethics": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 10,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
             },
             "Database_Programming": {
-                "ADE": 10,
-                "AI": 5,
-                "DE": 5,
-                "NDC": 5,
-                "SDS": 5
-            },
-            "Digital_&_Embedded_Systems": {
-                "ADE": 3,
-                "AI": 3,
-                "DE": 3,
-                "NDC": 10,
-                "SDS": 5
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 5,
+                "IDEX": 3
             },
             "Discrete_Structures": {
-                "ADE": 5,
-                "AI": 10,
-                "DE": 5,
-                "NDC": 5,
-                "SDS": 5
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
             },
             "Elements_of_Programming": {
-                "ADE": 10,
-                "AI": 10,
-                "DE": 10,
-                "NDC": 5,
-                "SDS": 5
+                "CLOUD COMPUTING": 10,
+                "CYBERSECURITY": 10,
+                "DATA ANALYTICS": 10,
+                "DIGITAL TRANSFORMATION": 5,
+                "IDEX": 5
             },
-            "Enterprise_Network": {
-                "ADE": 3,
-                "AI": 3,
-                "DE": 3,
-                "NDC": 10,
-                "SDS": 10
-            },
-            "ICT_&_Islam": {
-                "ADE": 10,
-                "AI": 10,
-                "DE": 5,
-                "NDC": 3,
-                "SDS": 10
+            "ICT_and_Islam": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 5,
+                "IDEX": 5
             },
             "Intelligent_Systems": {
-                "ADE": 5,
-                "AI": 10,
-                "DE": 5,
-                "NDC": 5,
-                "SDS": 5
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 10,
+                "DIGITAL TRANSFORMATION": 5,
+                "IDEX": 5
             },
-            "Intro_to_Computer_Organization": {
-                "ADE": 3,
-                "AI": 3,
-                "DE": 3,
-                "NDC": 10,
-                "SDS": 10
+            "Introduction_to_Computer_Organisation": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
             },
-            "Object_Oriented_Programming": {
-                "ADE": 10,
-                "AI": 10,
-                "DE": 10,
-                "NDC": 5,
-                "SDS": 5
+            "Management_of_Information_Security": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 10,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 5
+            },
+            "Mobile_Application_Development": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 10
+            },
+            "Network_Infrastructure_Management": {
+                "CLOUD COMPUTING": 10,
+                "CYBERSECURITY": 10,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
+            },
+            "Object-Oriented_Programming": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 10,
+                "DIGITAL TRANSFORMATION": 5,
+                "IDEX": 5
             },
             "Operating_Systems": {
-                "ADE": 5,
-                "AI": 3,
-                "DE": 3,
-                "NDC": 10,
-                "SDS": 10
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
             },
-            "Software_Engineering": {
-                "ADE": 10,
-                "AI": 10,
-                "DE": 10,
-                "NDC": 3,
-                "SDS": 3
+            "Organizational_Informatics": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 5,
+                "IDEX": 5
             },
-            "System_Analysis_&_Design": {
-                "ADE": 10,
-                "AI": 10,
-                "DE": 5,
-                "NDC": 3,
-                "SDS": 5
+            "System_Analysis_and_Design": {
+                "CLOUD COMPUTING": 10,
+                "CYBERSECURITY": 10,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 10
+            },
+            "Technopreneurship": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 10
             },
             "User_Experience_Design": {
-                "ADE": 10,
-                "AI": 10,
-                "DE": 10,
-                "NDC": 3,
-                "SDS": 3
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 10
+            },
+            "Web_Application_Development": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 5,
+                "IDEX": 5
             }
         },
         "spm_results": {
+            "Accounting": {
+                "CLOUD COMPUTING": 3,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 5,
+                "IDEX": 3
+            },
             "Additional_Mathematics": {
-                "ADE": 5,
-                "AI": 10,
-                "DE": 5,
-                "NDC": 5,
-                "SDS": 10
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 10,
+                "DIGITAL TRANSFORMATION": 5,
+                "IDEX": 3
             },
             "Biology": {
-                "ADE": 3,
-                "AI": 5,
-                "DE": 3,
-                "NDC": 5,
-                "SDS": 3
+                "CLOUD COMPUTING": 3,
+                "CYBERSECURITY": 3,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
             },
             "Chemistry": {
-                "ADE": 3,
-                "AI": 3,
-                "DE": 3,
-                "NDC": 3,
-                "SDS": 3
+                "CLOUD COMPUTING": 3,
+                "CYBERSECURITY": 3,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
             },
             "Computer_Science": {
-                "ADE": 10,
-                "AI": 10,
-                "DE": 10,
-                "NDC": 10,
-                "SDS": 10
+                "CLOUD COMPUTING": 10,
+                "CYBERSECURITY": 10,
+                "DATA ANALYTICS": 10,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 5
             },
             "Economics": {
-                "ADE": 5,
-                "AI": 3,
-                "DE": 5,
-                "NDC": 3,
-                "SDS": 3
+                "CLOUD COMPUTING": 3,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 5
             },
             "English": {
-                "ADE": 10,
-                "AI": 5,
-                "DE": 10,
-                "NDC": 5,
-                "SDS": 5
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 5,
+                "IDEX": 5
             },
             "Mathematics": {
-                "ADE": 5,
-                "AI": 10,
-                "DE": 10,
-                "NDC": 10,
-                "SDS": 10
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 10,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 5
             },
             "Physics": {
-                "ADE": 5,
-                "AI": 5,
-                "DE": 5,
-                "NDC": 10,
-                "SDS": 5
+                "CLOUD COMPUTING": 3,
+                "CYBERSECURITY": 3,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
             }
         },
         "technical_skills": {
-            "Algorithm_Design": {
-                "ADE": 5,
-                "AI": 10,
-                "DE": 5,
-                "NDC": 10,
-                "SDS": 10
+            "Agile_Project_Management_(Jira,_Trello,_Asana)": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 5
             },
-            "Cloud_Platforms_(AWS/Azure/GCP)": {
-                "ADE": 5,
-                "AI": 5,
-                "DE": 10,
-                "NDC": 5,
-                "SDS": 10
+            "Big_Data_Analysis_(Apache_Spark,_Hadoop,_MongoDB)": {
+                "CLOUD COMPUTING": 3,
+                "CYBERSECURITY": 3,
+                "DATA ANALYTICS": 10,
+                "DIGITAL TRANSFORMATION": 5,
+                "IDEX": 3
             },
-            "Containerization_(Docker/K8s)": {
-                "ADE": 10,
-                "AI": 5,
-                "DE": 10,
-                "NDC": 3,
-                "SDS": 5
+            "Business_Process_Automation_(UiPath,_Zapier,_Microsoft_Power_Automate)": {
+                "CLOUD COMPUTING": 3,
+                "CYBERSECURITY": 3,
+                "DATA ANALYTICS": 10,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 10
             },
-            "Debugging": {
-                "ADE": 10,
-                "AI": 10,
-                "DE": 10,
-                "NDC": 10,
-                "SDS": 10
+            "Cloud_Infrastructure_Provisioning_(AWS_Management_Console,_Microsoft_Azure,_Google_Cloud_Platform)": {
+                "CLOUD COMPUTING": 10,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
             },
-            "Git_Version_Control": {
-                "ADE": 10,
-                "AI": 5,
-                "DE": 10,
-                "NDC": 3,
-                "SDS": 5
+            "Cybersecurity_Auditing_&_Defense_(Kali_Linux,_Metasploit,_Nmap)": {
+                "CLOUD COMPUTING": 10,
+                "CYBERSECURITY": 10,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
             },
-            "JavaScript/_Web_Development": {
-                "ADE": 10,
-                "AI": 3,
-                "DE": 3,
-                "NDC": 3,
-                "SDS": 5
+            "Data_Visualization_&_Reporting_(Tableau,_Power_BI,_Microsoft_Excel)": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 10,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 3
             },
-            "Linux/_Command_Line": {
-                "ADE": 5,
-                "AI": 5,
-                "DE": 10,
-                "NDC": 10,
-                "SDS": 10
+            "Database_Management_&_Querying_(MySQL,_PostgreSQL,_Oracle_Database)": {
+                "CLOUD COMPUTING": 3,
+                "CYBERSECURITY": 3,
+                "DATA ANALYTICS": 10,
+                "DIGITAL TRANSFORMATION": 5,
+                "IDEX": 3
             },
-            "Problem_Solving": {
-                "ADE": 10,
-                "AI": 10,
-                "DE": 10,
-                "NDC": 10,
-                "SDS": 10
+            "Digital_Forensics_&_Ethics_(Autopsy,_EnCase,_FTK_Imager)": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 10,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
             },
-            "Python_Programming": {
-                "ADE": 10,
-                "AI": 10,
-                "DE": 10,
-                "NDC": 3,
-                "SDS": 5
+            "Infrastructure_Management_(Active_Directory,_PowerShell,_Windows_Server)": {
+                "CLOUD COMPUTING": 10,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
             },
-            "SQL_&_Database_Management": {
-                "ADE": 10,
-                "AI": 5,
-                "DE": 5,
-                "NDC": 3,
-                "SDS": 10
+            "Intelligent_Systems_Integration_(OpenAI_API,_TensorFlow,_PyTorch)": {
+                "CLOUD COMPUTING": 3,
+                "CYBERSECURITY": 3,
+                "DATA ANALYTICS": 10,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 10
             },
-            "Shell_Scripting": {
-                "ADE": 3,
-                "AI": 3,
-                "DE": 10,
-                "NDC": 10,
-                "SDS": 10
+            "Linux_System_Administration_(Ubuntu_Server,_Red_Hat,_Bash_Scripting)": {
+                "CLOUD COMPUTING": 10,
+                "CYBERSECURITY": 10,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
+            },
+            "Mobile_Application_Development_(Flutter,_Android_Studio,_Swift)": {
+                "CLOUD COMPUTING": 3,
+                "CYBERSECURITY": 3,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 5,
+                "IDEX": 5
+            },
+            "Network_Defense_&_Monitoring_(Cisco_Packet_Tracer,_Wireshark,_Snort)": {
+                "CLOUD COMPUTING": 10,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
+            },
+            "UI/UX_Design_&_Prototyping_(Figma,_Adobe_XD,_Sketch)": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 10
+            },
+            "Virtualization_&_Containerization_(Docker,_Kubernetes,_VMware)": {
+                "CLOUD COMPUTING": 10,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 3,
+                "DIGITAL TRANSFORMATION": 3,
+                "IDEX": 3
+            },
+            "Web_Application_Development_(React.js,_Node.js,_Visual_Studio_Code)": {
+                "CLOUD COMPUTING": 5,
+                "CYBERSECURITY": 5,
+                "DATA ANALYTICS": 5,
+                "DIGITAL TRANSFORMATION": 10,
+                "IDEX": 10
             }
         }
     },
@@ -271,7 +320,7 @@
             "best_criteria": "aptitude_test",
             "best_vectors": [
                 9.0,
-                4.0,
+                7.0,
                 2.0,
                 1.0
             ],
@@ -306,7 +355,7 @@
                 [
                     9.0,
                     6.0,
-                    2.0,
+                    3.0,
                     1.0
                 ]
             ]
@@ -326,51 +375,51 @@
         }
     },
     "riasec_weights": {
-        "ADE": {
-            "A": 10,
-            "C": 5,
-            "E": 3,
-            "I": 3,
-            "R": 10,
-            "S": 10
-        },
-        "AI": {
-            "A": 5,
+        "CLOUD COMPUTING": {
+            "A": 3,
             "C": 5,
             "E": 3,
             "I": 5,
-            "R": 10,
+            "R": 5,
             "S": 3
         },
-        "DE": {
+        "CYBERSECURITY": {
             "A": 5,
             "C": 5,
-            "E": 5,
-            "I": 3,
+            "E": 3,
+            "I": 10,
             "R": 5,
             "S": 5
         },
-        "NDC": {
+        "DATA ANALYTICS": {
             "A": 5,
-            "C": 10,
-            "E": 5,
-            "I": 5,
-            "R": 10,
-            "S": 3
-        },
-        "SDS": {
-            "A": 10,
             "C": 10,
             "E": 3,
             "I": 10,
-            "R": 10,
+            "R": 5,
             "S": 3
+        },
+        "DIGITAL TRANSFORMATION": {
+            "A": 3,
+            "C": 5,
+            "E": 10,
+            "I": 3,
+            "R": 3,
+            "S": 10
+        },
+        "IDEX": {
+            "A": 10,
+            "C": 10,
+            "E": 5,
+            "I": 3,
+            "R": 10,
+            "S": 10
         }
     },
     "weights_manual": {
-        "aptitude_test": 0.2,
+        "aptitude_test": 0.25,
         "previous_semester": 0.25,
         "spm_results": 0.25,
-        "technical_skills": 0.3
+        "technical_skills": 0.25
     }
 }

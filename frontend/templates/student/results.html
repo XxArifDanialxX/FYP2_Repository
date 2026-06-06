@@ -5,19 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Specialization Recommendation Results</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #f4f7f6; 
-            margin: 0; 
-            padding: 20px; 
-            color: #2c3e50;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; color: #2c3e50; }
         .results-container { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 30px; }
         .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 
@@ -29,7 +21,6 @@
             border-radius: 12px;
             margin-bottom: 10px;
         }
-        .agent-a-box h3 { color: #827717; margin-top: 0; font-size: 1.2em; display: flex; align-items: center; gap: 10px; }
 
         /* Top Recommendation Hero */
         .top-recommendation {
@@ -43,7 +34,7 @@
         .top-recommendation h2 { font-size: 2.8em; margin: 10px 0; font-weight: 800; text-transform: uppercase; }
         .top-recommendation .score { font-size: 4.5em; font-weight: 900; margin: 15px 0; }
 
-        /* Ranking Tables */
+        /* Tables */
         .ranking-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         .ranking-table th { background: #f8f9fa; padding: 15px; text-align: left; font-weight: 600; border-bottom: 2px solid #eee; }
         .ranking-table td { padding: 18px 15px; border-bottom: 1px solid #eee; }
@@ -61,12 +52,11 @@
         .roadmap-card { background: #fdfaff; padding: 25px; border-radius: 12px; border: 1px solid #eddaff; }
         .roadmap-card h4 { color: #5a189a; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 1.1em; }
         
-        .gap-banner { background: #5a189a; color: white; padding: 30px; border-radius: 15px; margin-top: 25px; position: relative; overflow: hidden; }
-        .gap-banner::after { content: '\f185'; font-family: 'Font Awesome 5 Free'; font-weight: 900; position: absolute; right: -20px; bottom: -20px; font-size: 8em; opacity: 0.1; }
+        .gap-banner { background: #5a189a; color: white; padding: 30px; border-radius: 15px; margin-top: 25px; }
 
-        /* Badges */
+        /* Icons & Badges */
         .skill-badge { display: inline-block; background: #fff3e0; color: #e65100; padding: 6px 15px; border-radius: 30px; margin: 4px; font-size: 0.9em; font-weight: 600; border: 1px solid #ffe0b2; }
-        .cert-badge { display: inline-block; background: #e8f5e9; color: #2e7d32; padding: 8px 18px; border-radius: 8px; margin-bottom: 10px; font-weight: 600; width: 100%; box-sizing: border-box; }
+        .cert-badge { display: inline-block; background: #e8f5e9; color: #2e7d32; padding: 8px 18px; border-radius: 8px; margin-bottom: 10px; font-weight: 600; width: 100%; box-sizing: border-box; border: 1px solid #c8e6c9; }
 
         .btn-action { display: inline-block; padding: 15px 35px; border-radius: 10px; font-weight: 700; text-decoration: none; transition: 0.3s; cursor: pointer; border: none; }
         .btn-home { background: #6c757d; color: white; }
@@ -79,40 +69,40 @@
 
     <div class="results-container">
         
-        <!-- Header Info -->
+        <!-- User Info Header -->
         <div class="card no-print" style="text-align: center; border-bottom: 4px solid #f20089;">
-            <h1 style="margin-bottom: 5px;">Academic Career Report</h1>
-            <p style="font-size: 1.1em; color: #666;">Prepared for <strong>{{ student.name }}</strong> | Matric: <strong>{{ student.matric }}</strong></p>
+            <h1 style="margin-bottom: 5px;"><i class="fas fa-file-medical-alt"></i> Personalized Pathway Analysis</h1>
+            <p style="font-size: 1.1em; color: #666;">Candidate: <strong>{{ student.name }}</strong> | ID: <strong>{{ student.matric }}</strong></p>
         </div>
 
-        <!-- AGENT A: REASONING -->
+        <!-- AGENT A: REASONING TRACE -->
         <div class="agent-a-box">
-            <h3><i class="fas fa-robot"></i> Agentic Orchestrator Analysis</h3>
-            <p style="line-height: 1.6; font-size: 1.05em;"><i>"{{ agent_reasoning }}"</i></p>
+            <h3 style="color: #827717;"><i class="fas fa-robot"></i> Agentic Orchestrator Analysis</h3>
+            <p style="line-height: 1.6; font-size: 1.05em; color: #555;"><i>"{{ agent_reasoning }}"</i></p>
         </div>
 
-        <!-- HERO SECTION -->
+        <!-- HERO SECTION: THE WINNER -->
         <div class="top-recommendation">
-            <p style="text-transform: uppercase; letter-spacing: 3px; font-weight: 600; opacity: 0.9;">Recommended Specialization</p>
+            <p style="text-transform: uppercase; letter-spacing: 3px; font-weight: 600; opacity: 0.9;">Best Fit Specialization</p>
             <h2>{{ top_spec_name }}</h2>
             <div class="score">{{ "%.1f"|format(consensus[0].score) }}%</div>
             <div style="background: rgba(255,255,255,0.15); display: inline-block; padding: 10px 30px; border-radius: 50px; font-weight: 600;">
-                Calculated via AI-Weighted Multi-Criteria Consensus
+                Calculated via AI-Weighted Mathematical Consensus
             </div>
         </div>
 
-        <!-- CONSENSUS TABLE -->
+        <!-- CONSENSUS RANKING TABLE -->
         <div class="card">
-            <h3><i class="fas fa-layer-group"></i> Consolidated Ranking Results</h3>
-            <p style="color: #7f8c8d; margin-top: -10px;">Aggregated scores from q-ROF-AHP, BWM, SWARA, and CRITIC engines.</p>
+            <h3><i class="fas fa-layer-group"></i> Consolidated Ranking</h3>
+            <p style="color: #7f8c8d; margin-top: -10px;">Aggregated results across q-ROF-AHP, BWM, SWARA, and CRITIC engines.</p>
             
             <table class="ranking-table">
                 <thead>
                     <tr>
                         <th width="80">Rank</th>
-                        <th>Pathway</th>
+                        <th>Academic Pathway</th>
                         <th width="120">Match %</th>
-                        <th width="280">Visual Strength</th>
+                        <th width="280">Algorithm Confidence</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -126,6 +116,7 @@
                         <td><strong style="font-size: 1.2em;">{{ item.score }}%</strong></td>
                         <td>
                             <div class="score-bar">
+                                {# AI-driven colors for the bars #}
                                 {% set color = '#f20089' if loop.first else '#5a189a' %}
                                 <div class="score-fill" style="width: {{ item.score }}%; background: {{ color }};"></div>
                             </div>
@@ -136,18 +127,18 @@
             </table>
         </div>
 
-        <!-- INDIVIDUAL ENGINES -->
+        <!-- INDIVIDUAL ALGORITHM PERSPECTIVES -->
         <div class="card no-print">
-            <h3><i class="fas fa-calculator"></i> Individual Engine Perspectives</h3>
+            <h3><i class="fas fa-microchip"></i> Individual Logic Perspectives</h3>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
-                {% for method in methods %}
+                {% for method_name in methods %}
                 <div style="padding: 20px; border: 1px solid #eee; border-radius: 12px; background: #fafafa;">
-                    <h4 style="margin-top: 0; color: #5a189a; border-bottom: 2px solid #eddaff; padding-bottom: 10px;">{{ method }} Result</h4>
+                    <h4 style="margin-top: 0; color: #5a189a; border-bottom: 2px solid #eddaff; padding-bottom: 10px;">{{ method_name }}</h4>
                     <table style="width: 100%; font-size: 0.9em; border-spacing: 0 8px; border-collapse: separate;">
-                        {% for row in method_results[method] %}
+                        {% for row in method_results[method_name] %}
                         <tr>
                             <td width="30">#{{ row.rank }}</td>
-                            <td style="font-weight: 600;">{{ row.spec[:30] }}...</td>
+                            <td style="font-weight: 600;">{{ row.spec }}</td>
                             <td align="right"><strong>{{ row.score }}%</strong></td>
                         </tr>
                         {% endfor %}
@@ -157,25 +148,26 @@
             </div>
         </div>
 
-        <!-- DYNAMIC AGENT B SECTION -->
+        <!-- DYNAMIC AGENT B: EXCELLENCE ROADMAP -->
         <div class="agent-b-section">
             <h2 style="color: #5a189a; margin-top: 0; display: flex; align-items: center; gap: 15px;">
-                <i class="fas fa-graduation-cap"></i> Agentic AI: Excellence Roadmap
+                <i class="fas fa-graduation-cap"></i> Agentic AI: Excellence Roadmap for {{ top_spec_name }}
             </h2>
-            <p style="color: #666; font-size: 1.1em;">Analyzing live 2026 industry trends in Malaysia for <strong>{{ top_spec_name }}</strong>...</p>
+            <p style="color: #666; font-size: 1.1em;">Analyzing live 2026 Malaysian industry trends to bridge your technical gaps.</p>
 
             <div class="roadmap-grid">
-                <!-- Pillars -->
+                <!-- Pillar 1: Knowledge -->
                 <div class="roadmap-card">
-                    <h4><i class="fas fa-brain"></i> Foundational Knowledge</h4>
+                    <h4><i class="fas fa-brain"></i> Theoretical Pillars</h4>
                     <ul style="padding-left: 20px; line-height: 1.8;">
                         {% for item in career_roadmap.core_knowledge %}
                         <li>{{ item }}</li>
                         {% endfor %}
                     </ul>
                 </div>
+                <!-- Pillar 2: Technical Tools -->
                 <div class="roadmap-card">
-                    <h4><i class="fas fa-code"></i> Technical Stack to Master</h4>
+                    <h4><i class="fas fa-code"></i> Modern Tech Stack (2026)</h4>
                     <ul style="padding-left: 20px; line-height: 1.8;">
                         {% for item in career_roadmap.technical_skills %}
                         <li>{{ item }}</li>
@@ -184,21 +176,21 @@
                 </div>
             </div>
 
-            <!-- Gap Bridging -->
+            <!-- Gap Bridging Advice -->
             <div class="gap-banner">
-                <h4 style="margin-top: 0; font-size: 1.3em;"><i class="fas fa-bridge"></i> Bridging Your Skill Gaps</h4>
-                <p style="font-size: 1.1em; line-height: 1.7; opacity: 0.95;">{{ career_roadmap.gap_bridging }}</p>
+                <h4 style="margin-top: 0; font-size: 1.3em; color: white;"><i class="fas fa-bridge"></i> Bridging Your Skill Gaps</h4>
+                <p style="font-size: 1.1em; line-height: 1.7; opacity: 0.95; color: white;">{{ career_roadmap.gap_bridging }}</p>
             </div>
 
             <div class="roadmap-grid">
-                <!-- Certs -->
+                <!-- Certifications -->
                 <div class="roadmap-card" style="background: #f1f8ff; border-color: #bbdefb;">
-                    <h4 style="color: #0d47a1;"><i class="fas fa-certificate"></i> Target Certifications</h4>
+                    <h4 style="color: #0d47a1;"><i class="fas fa-certificate"></i> Global Certifications</h4>
                     {% for cert in career_roadmap.certifications %}
                     <div class="cert-badge">{{ cert }}</div>
                     {% endfor %}
                 </div>
-                <!-- Project -->
+                <!-- Project Idea -->
                 <div class="roadmap-card" style="background: #fff8e1; border-color: #ffe082;">
                     <h4 style="color: #f57f17;"><i class="fas fa-laptop-code"></i> Suggested Capstone Project</h4>
                     <p style="font-size: 1.05em; line-height: 1.6; color: #444;">{{ career_roadmap.project_idea }}</p>
@@ -206,37 +198,32 @@
             </div>
         </div>
 
-        <!-- STATIC FOCUS AREAS (From Specialist Info) -->
+        <!-- STATIC FOCUS AREAS (Core Subjects and Weaknesses) -->
         <div class="card">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                <!-- Left: Subjects to Master -->
                 <div>
-                    <h3 style="color: #2196F3;"><i class="fas fa-book"></i> Core Curriculum Subjects</h3>
+                    <h3 style="color: #2196F3;"><i class="fas fa-book"></i> Faculty Core Subjects</h3>
                     <div style="margin-top: 15px;">
                         {% for subj in top_spec_info.subjects %}
-                        <div style="background: #e3f2fd; padding: 12px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid #2196F3;">
+                        <div style="background: #e3f2fd; padding: 12px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid #2196F3; font-size: 0.95em;">
                             <i class="fas fa-check-circle" style="color: #2e7d32; margin-right: 10px;"></i> {{ subj }}
                         </div>
                         {% endfor %}
                     </div>
                 </div>
+
+                <!-- Right: Weak Areas based on scores -->
                 <div>
-                    <h3 style="color: #FF9800;"><i class="fas fa-exclamation-circle"></i> Weak Areas to Strengthen</h3>
+                    <h3 style="color: #FF9800;"><i class="fas fa-exclamation-circle"></i> Weak Areas identified</h3>
                     <div style="margin-top: 15px;">
-                        {% for skill in weak_skills %}
-                        <span class="skill-badge">{{ skill }}</span>
-                        {% endfor %}
-                    </div>
+                        <p style="font-size: 0.9em; color: #666; margin-bottom: 15px;">You rated these skills lower during asse
                 </div>
             </div>
-        </div>
-
+        </div>    
+        
         <!-- ACTIONS -->
         <div class="no-print" style="text-align: center; margin-bottom: 50px;">
             <a href="/" class="btn-action btn-home">Return to Home</a>
             <button onclick="window.print()" class="btn-action btn-print"><i class="fas fa-print"></i> Download as PDF Report</button>
         </div>
-
-    </div>
-
-</body>
-</html>

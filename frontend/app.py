@@ -4,11 +4,18 @@ import json
 from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
-app.secret_key = 'fyp_master_secret_2026'
-
+app.secret_key = 'fyp_final_secure_2026'
 API_BASE_URL = os.getenv("API_URL", "http://127.0.0.1:5001")
 
-# ==================== STATIC UI DATA ====================
+# ==================== DATA CONSTANTS ====================
+
+SPECIALIZATION_INFO = {
+    "CYBERSECURITY": {"subjects": ["Penetration Testing", "Cryptography", "Network Security"], "careers": [{"title": "Security Analyst", "desc": "Defense"}]},
+    "CLOUD COMPUTING": {"subjects": ["Cloud Architecture", "DevOps", "Virtualization"], "careers": [{"title": "Cloud Architect", "desc": "Design"}]},
+    "IDEX": {"subjects": ["UI/UX Design", "Game Development", "Virtual Reality"], "careers": [{"title": "UX Researcher", "desc": "User Journeys"}]},
+    "DATA ANALYTICS": {"subjects": ["Statistical Modeling", "Big Data", "Visualisation"], "careers": [{"title": "Data Scientist", "desc": "Modeling"}]},
+    "DIGITAL TRANSFORMATION": {"subjects": ["Digital Strategy", "IoT Integration", "Enterprise Architecture"], "careers": [{"title": "DX Consultant", "desc": "Growth"}]}
+}
 
 RIASEC_QUESTIONS = [
     {"id": 1, "trait": "R", "text": "When building furniture, do you enjoy following technical diagrams?"},
@@ -43,21 +50,14 @@ RIASEC_QUESTIONS = [
     {"id": 30, "trait": "C", "text": "Do you ensure all details are correct?"}
 ]
 
-SPEC_INFO = {
-    "APPLICATION DEVELOPMENT ENGINEERING": {"subjects": ["Project Management", "Software Architecture", "Quality Assurance"], "careers": [{"title": "Software dev", "desc": "Apps"}]},
-    "ARTIFICIAL INTELLIGENCE": {"subjects": ["Machine Learning", "NLP", "Robotics"], "careers": [{"title": "AI Engineer", "desc": "Models"}]},
-    "SECURITY IN DIGITAL SYSTEM": {"subjects": ["Forensics", "Pentesting", "Cryptography"], "careers": [{"title": "SOC Analyst", "desc": "Defense"}]},
-    "DATA ENGINEERING": {"subjects": ["Big Data", "Databases", "Cloud Pipelines"], "careers": [{"title": "Data Architect", "desc": "Storage"}]},
-    "NETWORK AND DATA COMMUNICATIONS": {"subjects": ["Routing", "IoT", "Network Admin"], "careers": [{"title": "Network Engineer", "desc": "Infra"}]}
-}
-
-# ==================== HELPERS ====================
-
 def conv(grade):
     g = str(grade).upper().strip()
     return {'A+':95,'A':90,'A-':85,'B+':80,'B':75,'B-':70,'C+':65,'C':60,'D':45,'E':40}.get(g, 0)
 
-# ==================== EXPERT ROUTES ====================
+# ==================== ROUTES ====================
+
+@app.route('/')
+def index(): return render_template('index.html')
 
 @app.route('/expert')
 def expert_dashboard():
@@ -132,11 +132,6 @@ def expert_swara_2():
         return redirect(url_for('expert_dashboard'))
     return render_template('expert/swara_step2.html', sorted_keys=session['sw_ord'], labels={"spm_results": "SPM", "previous_semester": "Uni", "technical_skills": "Skills", "aptitude_test": "Apt"})
 
-# ==================== STUDENT ROUTES ====================
-
-@app.route('/')
-def index(): return render_template('index.html')
-
 @app.route('/student/info', methods=['GET', 'POST'])
 def student_info():
     if request.method == 'POST':
@@ -173,7 +168,8 @@ def student_riasec():
     if request.method == 'POST':
         res = [int(request.form.get(f'q{i}') or 3) for i in range(1, 31)]
         mapped = [{1:-2, 2:-1, 3:0, 4:1, 5:2}[r] for r in res]
-        session['riasec_scores'] = {t: sum(mapped[i*5:(i+1)*5]) for i, t in enumerate(['R','I','A','S','E','C'])}
+        traits = ['R','I','A','S','E','C']
+        session['riasec_scores'] = {t: sum(mapped[i*5:(i+1)*5]) for i, t in enumerate(traits)}
         return redirect(url_for('student_results'))
     return render_template('student/riasec.html', questions=RIASEC_QUESTIONS)
 
@@ -181,10 +177,21 @@ def student_riasec():
 def student_results():
     if 'student_info' not in session: return redirect(url_for('index'))
     payload = {"student_scores": {"spm": session['spm_scores'], "uni": session['uni_scores'], "skills": session['skills_scores'], "riasec": session['riasec_scores']}}
-    r = requests.post(f"{API_BASE_URL}/api/process_recommendation", json=payload).json()
-    con = r['consensus']
-    top = con[0]['spec']
-    return render_template('student/results.html', student=session['student_info'], consensus=con, method_results=r['method_results'], agent_reasoning=r['agent_reasoning'], career_roadmap=r['career_roadmap'], top_spec_name=top, top_spec_info=SPEC_INFO.get(top, {}), weak_skills=[k.replace('_',' ') for k,v in session['skills_scores'].items() if v < 6], methods=r['method_results'].keys())
+    
+    resp = requests.post(f"{API_BASE_URL}/api/process_recommendation", json=payload).json()
+    con = resp['consensus']
+    top_name = con[0]['spec']
+    
+    return render_template('student/results.html', 
+                           student=session['student_info'],
+                           consensus=con, 
+                           method_results=resp['method_results'],
+                           agent_reasoning=resp['agent_reasoning'],
+                           career_roadmap=resp['career_roadmap'],
+                           top_spec_name=top_name,
+                           top_spec_info=SPECIALIZATION_INFO.get(top_name, {}),
+                           weak_skills=[k.replace('_',' ') for k,v in session['skills_scores'].items() if v < 6],
+                           methods=resp['method_results'].keys())
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
